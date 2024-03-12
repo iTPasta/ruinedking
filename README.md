@@ -1,18 +1,13 @@
-# ProjetCMI
-Projet de jeu vidéo pour le CMI
+# Ruined King
 
-- Sur Linux :
+## Description
 
-	-Installez les pré-requis avec le fichier dependencies.sh
-	-Une fois fait vous pouvez lancer le jeu avec script.sh
+Small platformer-type video game made by first-year university student in 2022 as part of the "Cursus Master en Ingénierie Informatique" course.
 
-- Sur Windows :
+## How to launch
 
-	-Veuillez vérifier que python est bien installé (la version 3.10 est recommandée)
-	-Pour l'installer téléchargez le ici (pensez à cocher la case : "Ajouter au PATH") -> https://www.python.org/downloads/windows/
-	-Une fois fait, installez Pygame :
-		Il y a deux moyens :
-		- Via le fichier dependencies.bat (ne marche que si python est installé sur le PATH)
-		- Via l'invite de commande windows avec la commande "pip install pygame" ou "py -m pip install pygame"
-	-Vous pouvez désormais lancer le jeu via script.bat
+To launch the game, you have to make sure that you have Python installed on your device.  
+When you have it installed, you can use "pip install -r requirements.txt" to install the needed Python packages.  
+Then you just need to run the script.bat file if you are on Windows, or the script.sh file if you are on Linux.  
 
+Have fun :)
