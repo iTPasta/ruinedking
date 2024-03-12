@@ -1,0 +1,171 @@
+02/02/2022-03/02/2022 UPDATE : 
+
+-Creation de support.py:
+	-support.py est un fichier de stockage pour divers fonction comme :
+	-import_cut_graphics :#Importe les differents tiles d un fichier(les separes) et les mets dans une liste (leur créer une surface + rect)
+	-import_folder : Mise a jour de l'ancienne fonction de utilities.py  graphic_folders . Permet la recherche de fichiers grace à la fonction walk qui remplace listdir
+
+-Creation de game_data :
+	-Dictionnaire contenant tout les path (chemins) des fichier créer a l'aide du logiciel Tiled 
+
+-Remaniment total de map_setup afin de passer d'une map créer dans une liste a une map créer avec le logiciel Tiled 
+
+-Niveau.py :
+	-la fonction self.initialisation est remplacé par import_csv_layout()+create_tile_group() (voire support .py)
+	-Nouveau classe sprite et nouveaux groupe (exmpl terrain sprite) (voire create_tile_group)
+	-Nouvelle fonction player_setup() tres semblable a create_tile_group() qui permet de setup le départ et l'arrivé (entre autre)
+
+-terrain.py  ->  tiles.py :
+	-Renomé en tiles.py afin d'eviter toute confusion avec les terrains definis dans niveau.py (terrain layout ect ) ainsi que les terrain des tiled 
+	-De même la classe Terrain deviens la classe Tile
+	-Ajout d'une fonction update gerant le scrollage ???
+	-Ajout d'une classe StaticTile pour les tiles qui seront statique (#analyse) avec le principe d'heritage sur la classe Tile
+	-Ajout d'une classe CrateTile pour decaler les caisses vers le bas (car Comme le sprite de la caisse fais seulement (48x48) 
+pixel et que par default les surface sont placé en haut a gauche du recnotre caisse n'est pas collé au sol car elle ne touche pas le bas
+de la surface donc on la decale un peu vers le bas) avec le principe d'héritage sur la classe StaticTile
+	-Ajout d'une classe AnimatedTile contenant entre autre la fonction animate() precedemment stocké dans player.py avaec le principe d'heritage sur la classe Tile
+	-Ajout d'une classe Enemy avec le principe d'heritage sur la classe AnimatedTile
+
+-utilities.py est supprimé est son unique fonction graphic_folders est transferé dans support.py sous le nom de import_folder (avec quelque legere modif)
+
+-player.py :
+	-la fonction animate() est supprimé et déplacé dans la Classe AnimatedFile car elle va etre utilisé par tout ce qui est animé (+legere modif)
+
+-decoration.py : 
+	-Contient les classes Sky,Water,Cloud gerant le décor
+
+
+04/02/2022 UPDATE :
+
+	-Correction du beug des enemis qui ce suicide 
+	-Epurage du code mort (enlever les fonctions qui ne servent plus)
+
+
+14/02/2022 UPDATE :
+
+	- création de la variable path dans pathing.py (ne peut pas être mis dans les autres .py)
+	- modification du nom ("path" -> "pathDust") dans particles.py
+	- modification du nom ("path" -> "pathPlayer") dans player.py
+
+
+
+A FAIRE URGENT:
+-Enlever le marteau de la hitbox (reduire le rec du player ?)
+-Corriger le bug caisse+palmier : Pour voire ce beug il suffit d'aller sur une caisse coller a un palmier (les 2 ont une petite difference de hauteur) et de passer de la caisse
+au palmier sans sauter ce qui provoque une tp (Vertical colision et la  hitbox du marteau sont les principaux suspect)
+
+22/02/2022 UPDATE:
+
+FUSION DES PNG + CSV ect des version VB.0.3 et VB.0.4
+
+-Decoration.py:
+	-Ajout de la classe SBMouvant (voir VB.0.4)
+
+-game_data.py :
+	-Ajout du dictionnaire level_1 + update des path
+-tiles.py :
+	-Ajout des classes enemy2 pour les serpents et Block
+
+-path.py 
+	-Update choppant le path depuis script.sh
+
+-niveau.py
+	-Modification de l'init de la classe niveau pour avoir une init diferente entre le lvl 1 et 0 
+	-Modification de create_tile_group pour faire fonctionner le lvl 1
+	-Horizontale et Verticale collision update pour add les palmiers eulement sur le niveau 0
+	-Ajout d'une fonction potentiellement inutil / incomprise nommé  enemy_collision()
+	-Ajout d'une fonction game_over qui quitte / ferme la fenetre
+	-Update de  launch pour afficher le lvl 1	
+
+7/03/2022 UPDATE : 
+
+-Ajout du script.bat pour lancer le jeu sous windows
+
+-game_data.py:
+	-Ajout de la liste Mondes regroupant les divers niveau. Liste de monde étant eux meme une liste de niveau	
+	
+-main.py :
+	-Creation d'une boucle qui passe de niveau en niveau et se termine sans plantage quand y en a plus
+
+-niveau.py
+	-creation de self.running pour savoir si le niveau est en cours (finis mort ?)
+	-creation de self.game_over() qui actuellement quitte le jeu
+	-modification du self.launch pour actualiser les nouveau parametre
+	-Passe au niveau suivant quand finis
+
+
+-Player.py:
+	-Ajout de HP
+	-Fonction check() qui regarde si des degats sont prit avec le groupe d'ennemis du niveau et si on est arrivé
+
+
+A FAIRE :
+
+-Bug hitbox marteau !!!!
+-Systeme pv affichage (barre de vie; coeur ; chiffre )
+-Systeme de vie (ATM quand on meurt ya 0 respawn ; on a q'une vie quoi)
+-Affichage/ Animation quand on prend des degats
+-Recolte des pieces (pour vie supp ?)
+
+
+15/03/2022 UPDATE:
+
+-Ajout d'un dependencies.sh et .bat :
+	-permet l'installation de python et de pygame si l'utilisateur ne les a pas déja.
+
+-Modification du Readme :
+	-Instruction d'installation et de lancement du jeu
+
+	
+29/03/2022 UPDATE :
+	- Implémentation graphique des points de vies grace à la méthode "update_heart" de niveau.py et à l'ajout de l'attribut "self.heart" dans niveau.py.
+	- Ajout de "self.base_health" dans player.py.
+	- Ajout d'une boucle dans player.update qui gere les collisions avec les pièces et les supprimes.
+	- Ajout d'un écran de chargement simple entre les niveaux.
+	- Ajout d'une musique pour chaque niveau.
+
+	Nouveau système de sauvegarde de la progression :
+		- Implémentation de deux nouvelles clés dans les dictionnaires des niveaux de "game_data.py" : 'name' et 'next_level'.
+		- Nouveau dictionnaire "progress_codes" dans "game_data.py" contenant les codes de progression de chaque niveau qui seront ensuite écrit dans un fichier de sauvegarde.
+		- Création du fichier "progress.py" contenant différentes fonctions pour sauvegarder la progression du joueur dans un fichier "progress.txt".
+		Fonctions et variables de progress.py :
+			Variable progress_ON : active ou non le système de progression, s'il n'est pas activé, on recommence toujours à partir du niveau 0.
+			Variable progress_file : enregistre le chemin du fichier "progress.txt" (même s'il n'existe pas encore).
+			Fonction save_progress(lvl) : crée un fichier "progress.txt" s'il n'existe pas et écrit le code du niveau "lvl" à l'intérieur (ce code étant contenu dans un nouveau dictionnaire de "game_data.py").
+			Fonction get_progress() : compare chaque codes de niveau à celui contenu dans "progress.txt" et retourne le niveau de progression actuel du jeu, si le fichier ne contient pas de code ou n'existe pas, retourne "level_0".
+
+31/03/2022 :
+	- Ajout de "level_2". Je le mets dans mondes juste après level_0 (même palette).
+	- Dans player.py j'ai mis les lignes 134 à 136 en comentaires (check si le player touche un ennemi) afin d'être tranquille pendant les tests.
+	- Création et ajout d'un "level_3".
+
+05/04/2022 :
+
+	- Ajout d'une variable self.compteurPiece dans Niveau.py dont l'affichage est géré dans la fonction "update_coins" de "niveau.py".
+	- 10 piece = une vie (voir player.check())
+	- Nouveau level_4 pour le monde 3
+	
+08/04/2022:
+
+	-Ajout d'un fichier Attack.py:
+		-Ajout d'une classe Attack permettant la création d'un objet tuant les ennemis
+	
+	-Modification de Player.py:
+		-Ajout d'une fonction d'attaque permettant de faire apparaitre l'image de l'attaque sur l'écran
+		-Ajout de l'animation d'attaque
+		-Modification de touches (space pour attaquer et fleche haut pour sauter)
+	
+	-Modification de Niveau.py:
+		-Modification des fonction de collision des ennemis pour les faire disparaitre si ils touchent l'attaque
+
+14/04/2022:
+
+	-Modification des sprites du joueurs -> plus aucun bug de collision !
+
+
+
+
+
+
+
+
